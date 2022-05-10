@@ -1,0 +1,78 @@
+body {
+    font-family: Nunito;
+}
+
+/* navbar */
+
+.navbar {
+    background: #F4D03F;
+}
+
+.navbar-brand {
+    font-family: Montserrat;
+    font-size: 25px;
+}
+
+.nav-link {
+    font-size: 18px;
+    transition: all .1s;
+}
+
+.nav-link:hover {
+    font-size: 20px;
+}
+
+/* main button */
+
+.btn-yellow {
+    background: #F4D03F;
+}
+
+/* main color */
+
+.yellow-color {
+    color: #F4D03F;
+}
+
+
+/* images */
+
+.img-main {
+    width: 250px;
+    height: 250px;
+}
+
+.img-order {
+    width: 300px;
+    height: 300px;
+}
+
+/* cards */
+
+.card-services {
+    width: 250px;
+}
+
+.img-card-service {
+    width: 245px;
+    height: 245px
+}
+
+/* circle, hr */
+
+.circle {
+    background: #F4D03F;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+}
+
+.circle h2 {
+    padding-top: 6.5px;
+}
+
+.yellow-hr {
+    height: 2px;
+    width: 150px;
+    background: #F4D03F;
+}

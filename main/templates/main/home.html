@@ -1,0 +1,120 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+    <div class="container text-center mt-5 pt-5 mb-3">
+        <h2>Эскизы любой сложности на заказ за 1-2 дня от <span class="yellow-color">100 рублей!</span></h2>
+    </div>
+    <div class="border-top border-2 w-50 mt-5 me-auto ms-auto"></div>
+    <div class="container text-center mt-3">
+        <div class="row">
+            {% for i in example_images %}
+                {% if i.image %}
+                    <div class="col-lg-3 mb-1">
+                        <a data-bs-toggle="modal" data-bs-target="#eximg{{ forloop.counter }}">
+                            <img class="img-thumbnail img-main" src="{{ i.image.url }}">
+                        </a>
+                    </div>
+                    <div class="modal fade" id="eximg{{ forloop.counter }}" tabindex="-1"
+                         aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{ i }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <img class="w-50 h-50" src="{{ i.image.url }}">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Закрыть
+                                    </button>
+                                    <form method="post" action="{% url 'main:favorite_add' i.id %}">
+                                        <button type="submit" class="btn btn-yellow">В избранное
+                                        </button>
+                                        {% csrf_token %}
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <br>
+        <div class="container text-center mt-3">
+            <ul class="pagination justify-content-center mt-3">
+                {% if example_images.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="?page={{ example_images.previous_page_number }}">Назад</a>
+                    </li>
+                {% endif %}
+                {% if example_images.has_next %}
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="?page={{ example_images.next_page_number }}">Следующая</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+        {% if user.is_staff %}
+            <a href="{% url 'main:add_example_image' %}" class="btn btn-yellow">Добавить эскизы</a>
+        {% endif %}
+    </div>
+    <div class="border-top border-2 w-50 mt-5 me-auto ms-auto"></div>
+    <div class="container text-center">
+        <h2 class="mt-3">Почему выбирают именно <span class="yellow-color">нас</span></h2>
+        <div class="row mt-4">
+            <div class="col-lg-6">
+                <div class="d-flex">
+                    <div class="circle">
+                        <h2>1</h2>
+                    </div>
+                    <p class="m-auto w-75">
+                        <b>Доступная стоимость.</b>
+                        В нашем каталоге
+                        представлены разные стили эскизов по доступным ценам. </p>
+                </div>
+                <div class="d-flex mt-5">
+                    <div class="circle">
+                        <div class="circle">
+                            <h2>2</h2>
+                        </div>
+                    </div>
+                    <p class="m-auto w-75"><b>Широкий спектр услуг.</b> На нашем сайте вы можете заказать многочисленные
+                        разновидности эскизов.</p>
+                </div>
+                <div class="d-flex mt-5">
+                    <div class="circle">
+                        <div class="circle">
+                            <h2>3</h2>
+                        </div>
+                    </div>
+                    <p class="m-auto w-75"><b>Короткие сроки выполнения.</b> Мы работаем 24 часа в сутки, поэтому
+                        покупатели
+                        получают свои заказы в кратчайший срок.</p>
+                </div>
+                <div class="d-flex mt-5 mb-5">
+                    <div class="circle">
+                        <div class="circle">
+                            <h2>4</h2>
+                        </div>
+                    </div>
+                    <p class="m-auto w-75">
+                        <b>Профессионализм.</b> К работе приступают только квалифицированные сотрудники с большим опытом
+                        работы.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <img class="img-thumbnail" src="{% static 'main/img/main-img.jpg' %}" width="300" height="500">
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Оформление заказа{% endblock %}
+
+{% block content %}
+    {% if service %}
+        <div class="container text-center mt-5 p-5">
+            <div class="row">
+                <div class="col-lg-4">
+                    {% if service.image %}
+                        <img src="{{ service.image.url }}" class="img-order">
+                    {% endif %}
+                </div>
+                <div class="col-lg-8 text-center">
+                    <h3>{{ service.title }}</h3><br>
+                    <p>{{ service.description }}</p><br>
+                    <h2>{{ service.price }}р</h2>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="container text-center mt-5 pt-5 mb-3">
+        <h2>Оформить <span class="yellow-color">заказ</span></h2>
+    </div>
+    <div class="yellow-hr m-auto"></div>
+    <div class="container text-center mt-3 w-50">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-yellow" type="submit">Оформить</button>
+        </form>
+    </div>
+{% endblock %}

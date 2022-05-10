@@ -1,0 +1,49 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block title %}Услуги{% endblock %}
+
+{% block content %}
+    <div class="container text-center mt-5 pt-5">
+        <h2>Наши <span class="yellow-color">услуги</span></h2>
+    </div>
+    <div class="yellow-hr m-auto"></div>
+    <div class="row text-center mt-5 w-75 m-auto">
+        {% for serv in services %}
+            <div class="col-lg-6 mb-3">
+                <div class="card m-auto card-services">
+                    <img src="{{ serv.image.url }}" class="card-img-top img-card-service">
+                    <div class="card-body">
+                        <h4 class="card-text">{{ serv.title }}</h4>
+                        <p class="card-text">{{ serv.description|truncatewords:10 }}</p>
+                        <a href="{% url 'main:order_by_id' serv.id %}" class="btn btn-yellow">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="container text-center mt-5 mb-1">
+        <h2>Стоимость <span class="yellow-color">услуг</span></h2>
+    </div>
+    <div class="yellow-hr m-auto"></div>
+    <div class="container w-50 mt-4">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">Наименование услуги</th>
+                <th scope="col">Стоимость услуги для новых клиентов</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for serv in services %}
+                <tr>
+                    <td>{{ serv.title }}</td>
+                    <td>{{ serv.price }}р</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
