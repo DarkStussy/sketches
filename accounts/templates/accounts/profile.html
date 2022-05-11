@@ -1,5 +1,6 @@
 {% extends 'main/base.html' %}
 
+{% load crispy_forms_tags %}
 
 {% block title %}Профиль{% endblock %}
 
@@ -129,7 +130,18 @@
                                                 aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        {{ order.admin_answer }}
+                                        <h4>Сообщение администратора: </h4>
+                                        {{ order.admin_answer }}<br><br>
+                                        {% if not order.user_answer %}
+                                            <form method="post" action="{% url 'accounts:add_answer' order.id %}">
+                                                {% csrf_token %}
+                                                {{ answer_form|crispy }}
+                                                <button class="btn btn-yellow">Сохранить</button>
+                                            </form>
+                                        {% else %}
+                                            <h4>Ваше сообщение: </h4>
+                                            {{ order.user_answer }}
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>

@@ -13,3 +13,7 @@ class OrderForm(forms.Form):
 class AddExampleImageForm(forms.Form):
     image_field = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}),
                                                label="Эскизы")
+
+
+class AddUserAnswer(forms.Form):
+    text = forms.CharField(widget=forms.Textarea, label='Сообщение для администратора')

@@ -1,11 +1,13 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_POST
 
 from accounts.forms import UserRegistrationForm
 from accounts.models import FavoritePhoto
 from main.models import Order
+from main.forms import AddUserAnswer
 
 
 def login_user(request):
@@ -53,5 +55,18 @@ def profile(request):
         images = paginator.page(paginator.num_pages)
 
     orders = Order.objects.filter(user=request.user)
+    answer_form = AddUserAnswer()
     return render(request, "accounts/profile.html", {"user": request.user, 'favorites': images,
-                                                     'favobj': favorites, 'orders': orders})
+                                                     'favobj': favorites, 'orders': orders, 'answer_form': answer_form})
+
+
+@login_required
+@require_POST
+def add_answer(request, order_id):
+    answer_form = AddUserAnswer(request.POST)
+    order = get_object_or_404(Order, id=order_id)
+    if answer_form.is_valid():
+        cd = answer_form.cleaned_data
+        order.user_answer = cd['text']
+        order.save()
+    return redirect('accounts:profile')

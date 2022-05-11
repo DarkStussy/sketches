@@ -39,6 +39,7 @@ class Order(models.Model):
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
     admin_answer = models.TextField(null=True, blank=True)
+    user_answer = models.TextField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Заказ'
